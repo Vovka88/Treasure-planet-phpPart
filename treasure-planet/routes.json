@@ -1,0 +1,1 @@
+[{"domain":null,"method":"GET|HEAD","uri":"\/","name":null,"action":"Closure","middleware":["web"]},{"domain":null,"method":"GET|HEAD","uri":"storage\/{path}","name":"storage.local","action":"Closure","middleware":[]},{"domain":null,"method":"GET|HEAD","uri":"up","name":null,"action":"Closure","middleware":[]}]
