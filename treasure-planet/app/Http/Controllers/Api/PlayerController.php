@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @SuppressWarnings("App\Http\Middleware\Cors")
+ */
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;

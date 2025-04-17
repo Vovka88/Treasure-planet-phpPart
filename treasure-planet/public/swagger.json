@@ -1,0 +1,311 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Treasure Planet API",
+        "description": "API для авторизации, регистрации и управления игроками",
+        "contact": {
+            "email": "you@example.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "Локальный сервер разработки"
+        }
+    ],
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Авторизация пользователя",
+                "operationId": "222b2625838e3c57e017987f73598fda",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешная авторизация",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "player_id": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неверные данные"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Выход пользователя",
+                "operationId": "ad65cbbd4e9f201619eae184a5961a98",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "token"
+                                ],
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "abcdef123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Выход выполнен"
+                    }
+                }
+            }
+        },
+        "/api/registration": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Регистрация нового пользователя",
+                "operationId": "5dbe69bd3137174314a4c7075e300118",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "newuser@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "securepassword"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Аккаунт создан",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "type": "string",
+                                            "example": "Аккаунт создан"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Не получилось создать аккаунт"
+                    }
+                }
+            }
+        },
+        "/api/delete-user": {
+            "delete": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Удаление пользователя",
+                "operationId": "83f1b6e7747251be62a196a57fddb2cc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "player_id"
+                                ],
+                                "properties": {
+                                    "player_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Аккаунт успешно удалён"
+                    },
+                    "401": {
+                        "description": "Не получилось удалить аккаунт"
+                    }
+                }
+            }
+        },
+        "/api/get-token": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Проверка токена и получение данных игрока",
+                "operationId": "0bb7e005bf71db901b11518ca62151c7",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "token"
+                                ],
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "abcdef123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Токен действителен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "type": "string",
+                                            "example": "Всё ок"
+                                        },
+                                        "player_id": {
+                                            "type": "integer"
+                                        },
+                                        "username": {
+                                            "type": "string"
+                                        },
+                                        "player_avatar_id": {
+                                            "type": "integer"
+                                        },
+                                        "player_hp": {
+                                            "type": "integer"
+                                        },
+                                        "player_money": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Произошла ошибка, не удалось вернуть айди аккаунта"
+                    }
+                }
+            }
+        },
+        "/api/update-user": {
+            "put": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Обновить имя пользователя и аватар",
+                "operationId": "f07904dfab140690a024a9b3608cde2d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "player_id",
+                                    "username",
+                                    "avatar_id"
+                                ],
+                                "properties": {
+                                    "player_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "username": {
+                                        "type": "string",
+                                        "example": "НовоеИмя"
+                                    },
+                                    "avatar_id": {
+                                        "type": "integer",
+                                        "example": 3
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Всё ок"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        }
+    ]
+}

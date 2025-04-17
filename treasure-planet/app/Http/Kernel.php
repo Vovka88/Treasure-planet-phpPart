@@ -9,9 +9,9 @@ class Kernel extends HttpKernel
     /**
      * Глобальные middleware, которые выполняются для каждого запроса.
      */
-    protected $middleware = [
-        \App\Http\Middleware\Cors::class, // Добавляем поддержку CORS
-    ];
+    // protected $middleware = [
+        // \App\Http\Middleware\Cors::class, // Добавляем поддержку CORS
+    // ];
 
     /**
      * Middleware групп.
