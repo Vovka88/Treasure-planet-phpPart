@@ -20,6 +20,7 @@
                 "tags": [
                     "Auth"
                 ],
+
                 "summary": "Авторизация пользователя",
                 "operationId": "222b2625838e3c57e017987f73598fda",
                 "requestBody": {

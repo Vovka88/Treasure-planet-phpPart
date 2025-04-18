@@ -150,8 +150,8 @@ class AuthController extends Controller
     }
 
     /**
-     * @OA\Delete(
-     *     path="/api/delete-user",
+     * @OA\Post(
+     *     path="/api/deleteaccount",
      *     summary="Удаление пользователя",
      *     tags={"Auth"},
      *     @OA\RequestBody(
@@ -190,7 +190,7 @@ class AuthController extends Controller
     }
     /**
      * @OA\Post(
-     *     path="/api/get-token",
+     *     path="/api/loginByToken",
      *     summary="Проверка токена и получение данных игрока",
      *     tags={"Auth"},
      *     @OA\RequestBody(
@@ -248,8 +248,8 @@ class AuthController extends Controller
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/update-user",
+     * @OA\Post(
+     *     path="/api/updateusername",
      *     summary="Обновить имя пользователя и аватар",
      *     tags={"Auth"},
      *     @OA\RequestBody(

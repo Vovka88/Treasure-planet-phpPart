@@ -21,7 +21,9 @@ Route::post('/savelevelstats', [LevelController::class, 'saveLevelData']);
 
 // Работа с друзьями
 Route::post('/getfriends', [FriendsController::class, 'getFriends']);
+Route::post('/getplayers', [FriendsController::class, 'getPlayers']);
 Route::post('/getfriendsinvites', [FriendsController::class, 'getInvitesToFriends']);
 Route::post('/sendfriendinvite', [FriendsController::class, 'sendFriendInvite']);
 Route::post('/acceptfriendinvite', [FriendsController::class, 'acceptFriendInvite']);
+Route::post('/declinefriendinvite', [FriendsController::class, 'declineFriendInvite']);
 Route::post('/deletefriend', [FriendsController::class, 'deleteFriend']);

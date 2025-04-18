@@ -1,0 +1,991 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "Локальный сервер разработки"
+        }
+    ],
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Авторизация пользователя",
+                "operationId": "222b2625838e3c57e017987f73598fda",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешная авторизация",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "player_id": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неверные данные"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Выход пользователя",
+                "operationId": "ad65cbbd4e9f201619eae184a5961a98",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "token"
+                                ],
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "abcdef123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Выход выполнен"
+                    }
+                }
+            }
+        },
+        "/api/registration": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Регистрация нового пользователя",
+                "operationId": "5dbe69bd3137174314a4c7075e300118",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "newuser@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "securepassword"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Аккаунт создан",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "type": "string",
+                                            "example": "Аккаунт создан"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Не получилось создать аккаунт"
+                    }
+                }
+            }
+        },
+        "/api/deleteaccount": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Удаление пользователя",
+                "operationId": "11d18ae43a68580c1352927b6d39ab73",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "player_id"
+                                ],
+                                "properties": {
+                                    "player_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Аккаунт успешно удалён"
+                    },
+                    "401": {
+                        "description": "Не получилось удалить аккаунт"
+                    }
+                }
+            }
+        },
+        "/api/loginByToken": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Проверка токена и получение данных игрока",
+                "operationId": "dbf71c9f3c8fa5cb41d023976ca162ed",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "token"
+                                ],
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "abcdef123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Токен действителен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "type": "string",
+                                            "example": "Всё ок"
+                                        },
+                                        "player_id": {
+                                            "type": "integer"
+                                        },
+                                        "username": {
+                                            "type": "string"
+                                        },
+                                        "player_avatar_id": {
+                                            "type": "integer"
+                                        },
+                                        "player_hp": {
+                                            "type": "integer"
+                                        },
+                                        "player_money": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Произошла ошибка, не удалось вернуть айди аккаунта"
+                    }
+                }
+            }
+        },
+        "/api/updateusername": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Обновить имя пользователя и аватар",
+                "operationId": "6edd1086322943da4a72697dc3b66f0e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "player_id",
+                                    "username",
+                                    "avatar_id"
+                                ],
+                                "properties": {
+                                    "player_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "username": {
+                                        "type": "string",
+                                        "example": "НовоеИмя"
+                                    },
+                                    "avatar_id": {
+                                        "type": "integer",
+                                        "example": 3
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Всё ок"
+                    }
+                }
+            }
+        },
+        "/api/getfriends": {
+            "post": {
+                "tags": [
+                    "Friends"
+                ],
+                "summary": "Получить список друзей пользователя",
+                "description": "Возвращает список друзей игрока со статусом 'accepted'.",
+                "operationId": "e63830015fa33be157c71a6c084cad1c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "player_id"
+                                ],
+                                "properties": {
+                                    "player_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Список друзей",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "players": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Player"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/getplayers": {
+            "post": {
+                "tags": [
+                    "Friends"
+                ],
+                "summary": "Получить список пользователей",
+                "description": "Возвращает список игроков.",
+                "operationId": "c6cb2b84586f608788accde4b8da5b0d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "player_id"
+                                ],
+                                "properties": {
+                                    "player_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Список игроков",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "players": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Player"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/getfriendsinvites": {
+            "post": {
+                "tags": [
+                    "Friends"
+                ],
+                "summary": "Получить список входящих заявок в друзья",
+                "description": "Возвращает список заявок со статусом 'pending'.",
+                "operationId": "dd4785937ee3b216dc9841d93b2ab7de",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "player_id"
+                                ],
+                                "properties": {
+                                    "player_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Список заявок",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "friends": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/FriendRequest"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/sendfriendinvite": {
+            "post": {
+                "tags": [
+                    "Friends"
+                ],
+                "summary": "Отправить заявку в друзья",
+                "description": "Создаёт заявку в друзья от одного игрока к другому.",
+                "operationId": "3e5550aa97e7400322eb5dc3725653bc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "player_id",
+                                    "friend_id"
+                                ],
+                                "properties": {
+                                    "player_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "friend_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Заявка отправлена",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "type": "string",
+                                            "example": "Заявка отправлена"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка отправки",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Ошибка отправки"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/acceptfriendinvite": {
+            "post": {
+                "tags": [
+                    "Friends"
+                ],
+                "summary": "Принять заявку в друзья",
+                "description": "Принимает входящую заявку и устанавливает статус 'accepted'.",
+                "operationId": "3517ea2be67549e308bea974d00aab50",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "player_id",
+                                    "friend_id"
+                                ],
+                                "properties": {
+                                    "player_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "friend_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Друг добавлен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "type": "string",
+                                            "example": "Друг добавлен"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка добавления",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Ошибка добавления"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/declinefriendinvite": {
+            "post": {
+                "tags": [
+                    "Friends"
+                ],
+                "summary": "Отклонить заявку в друзья",
+                "description": "отклоняет входящую заявку и удаляет её.",
+                "operationId": "cdaba52793d0ed89888be6bf2f7e4a45",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "player_id",
+                                    "friend_id"
+                                ],
+                                "properties": {
+                                    "player_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "friend_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Заявка удалена",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "type": "string",
+                                            "example": "Друг добавлен"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка удаления",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Ошибка добавления"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/deletefriend": {
+            "post": {
+                "tags": [
+                    "Friends"
+                ],
+                "summary": "Удалить друга",
+                "description": "Удаляет друга из списка друзей.",
+                "operationId": "656e4641fb1841cd3471e53667373903",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "player_id",
+                                    "friend_id"
+                                ],
+                                "properties": {
+                                    "player_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "friend_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Произошло удаление",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "type": "string",
+                                            "example": "Произошло удаление"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка удаления",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Ошибка удаления"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/getstats": {
+            "post": {
+                "tags": [
+                    "Levels"
+                ],
+                "summary": "Получить статистику уровня для игрока",
+                "operationId": "4c4c007235d551a07833754d63f28e60",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "player_id",
+                                    "level_id"
+                                ],
+                                "properties": {
+                                    "player_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "level_id": {
+                                        "type": "integer",
+                                        "example": 3
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешный ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Score"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка: Не получилось найти"
+                    }
+                }
+            }
+        },
+        "/api/getlevels": {
+            "post": {
+                "tags": [
+                    "Levels"
+                ],
+                "summary": "Получить список уровней игрока",
+                "operationId": "87c8a6c74d19a93cfb32d9ef641002d4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "player_id"
+                                ],
+                                "properties": {
+                                    "player_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Список уровней игрока",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "levels": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Score"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка: Не получилось найти"
+                    }
+                }
+            }
+        },
+        "/api/savelevelstats": {
+            "post": {
+                "tags": [
+                    "Levels"
+                ],
+                "summary": "Сохранить статистику уровня для игрока",
+                "operationId": "34c347d7519ebd1156b01f3f0294d046",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "player_id",
+                                    "level_id",
+                                    "score",
+                                    "count_of_stars",
+                                    "completed"
+                                ],
+                                "properties": {
+                                    "player_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "level_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "score": {
+                                        "type": "integer",
+                                        "example": 1500
+                                    },
+                                    "count_of_stars": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "completed": {
+                                        "type": "integer",
+                                        "enum": [
+                                            0,
+                                            1
+                                        ],
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешно сохранено",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "type": "string",
+                                            "example": "Данные сохранены"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сохранения"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Player": {
+                "properties": {
+                    "id": {
+                        "description": "ID игрока",
+                        "type": "integer"
+                    },
+                    "username": {
+                        "description": "Имя игрока",
+                        "type": "string"
+                    },
+                    "avatar_id": {
+                        "description": "Avatar игрока",
+                        "type": "integer"
+                    },
+                    "hp": {
+                        "description": "HP игрока",
+                        "type": "integer"
+                    },
+                    "money": {
+                        "description": "Money игрока",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "FriendRequest": {
+                "properties": {
+                    "player_id": {
+                        "description": "ID игрока, который отправил заявку",
+                        "type": "integer"
+                    },
+                    "friend_id": {
+                        "description": "ID игрока, которому отправлена заявка",
+                        "type": "integer"
+                    },
+                    "status": {
+                        "description": "Статус заявки (pending, accepted)",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Score": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "player_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "level_id": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "score": {
+                        "type": "integer",
+                        "example": 1500
+                    },
+                    "count_of_stars": {
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "completed": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-04-17T12:34:56Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-04-17T12:34:56Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Friends",
+            "description": "Friends"
+        },
+        {
+            "name": "Levels",
+            "description": "Levels"
+        }
+    ]
+}
